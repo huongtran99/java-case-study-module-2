@@ -6,7 +6,12 @@ public class Product {
     private String descriptionProduct;
     private double priceProduct;
     private int sold;
+    private int amount;
     private Category category;
+
+    public Product() {
+
+    }
 
     public Product(String idProduct, String nameProduct, String descriptionProduct, double priceProduct, int sold) {
         this.idProduct = idProduct;
@@ -71,8 +76,11 @@ public class Product {
                 ", nameProduct= " + nameProduct +
                 ", descriptionProduct= " + descriptionProduct +
                 ", priceProduct= " + priceProduct +
-                ", sold= " + sold +
-                "," + category;
+                ", " + category;
+    }
+
+     void show(){
+
     }
 
     public int getSold() {
@@ -81,5 +89,13 @@ public class Product {
 
     public void setSold(int sold) {
         this.sold = sold;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }

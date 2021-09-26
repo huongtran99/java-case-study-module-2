@@ -21,8 +21,9 @@ public class CartManagement implements IGeneralManagement<Cart> {
         if(cartList.isEmpty()) {
             System.out.println("Giỏ hàng của bạn trống");
         }
+        System.out.println("Giỏ hàng của bạn nè: ");
         for (Cart cart: cartList) {
-            System.out.println("Giỏ hàng của bạn nè: " + cart);
+            System.out.println(cart + " , số lượng: " + cart.getProduct().getAmount());
         }
     }
 

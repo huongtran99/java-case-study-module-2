@@ -92,20 +92,27 @@ public class MainLogin {
     }
 
     public Account inputAccount() {
+        Account account =  new Account();
         System.out.print("Nhập id: ");
         String id = scanner.nextLine();
-        System.out.print("Nhập tên đăng nhập: ");
-        String userName = scanner.nextLine();
-        String passWord, retype;
+        String userName, passWord, retype;
+        boolean isvalidName, isvalidPassWord;
         do {
+            System.out.print("Nhập tên đăng nhập: ");
+            userName = scanner.nextLine();
             System.out.print("Nhập mật khẩu: ");
             passWord = scanner.nextLine();
+            isvalidName = account.validate(userName);
+            isvalidPassWord = account.validate(passWord);
             System.out.println("Nhập lại mật khẩu của bạn: ");
             retype = scanner.nextLine();
+            if (!isvalidName || !isvalidPassWord) {
+                System.out.println("Tài khoản hoặc mật khẩu của bạn phải dài hơn 6 ký tự");
+            }
             if (!passWord.equals(retype)) {
                 System.out.println("không khớp !!");
             }
-        } while (!passWord.equals(retype));
+        } while (!passWord.equals(retype) || !isvalidName || !isvalidPassWord);
         String role = "user";
         return new Account(id, userName, passWord, role);
     }

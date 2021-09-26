@@ -1,11 +1,26 @@
 package com.codegym.model;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Account {
     private String id;
     private String userName;
     private String passWord;
     private String role;
     private double money;
+
+    private static final String ACCOUNT_REGEX = "^[_a-z0-9]{6,}$";
+
+    public boolean validate(String regex) {
+        Pattern pattern = Pattern.compile(ACCOUNT_REGEX);
+        Matcher matcher = pattern.matcher(regex);
+        return matcher.matches();
+    }
+
+    public Account() {
+
+    }
 
     public Account(String userName, String passWord) {
         this.userName = userName;
@@ -67,13 +82,13 @@ public class Account {
         this.money = money;
     }
 
-    public void addMoney (double money){
+    public void addMoney(double money) {
         this.money += money;
     }
 
     @Override
     public String toString() {
         return "account information: " + userName + "\n" +
-               "id= " + id + ", userName= " + userName + ", passWord= " + passWord + ", role= " + role + ", money= " + money + " USD";
+                "id= " + id + ", userName= " + userName + ", role= " + role + ", money= " + money + " USD";
     }
 }

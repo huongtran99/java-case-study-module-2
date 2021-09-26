@@ -87,7 +87,7 @@ public class UserMenu {
             System.out.println(productManagement.getProductList().get(i) + " , đã bán đc " + productManagement.getProductList().get(i).getSold() + " sản phẩm.");
             count++;
             System.out.println("Nhấn phím Enter để xem tiếp.");
-            if(count == 5) {
+            if (count == 5) {
                 count = 0;
                 scanner.nextLine();
             }
@@ -135,7 +135,7 @@ public class UserMenu {
         }
         for (int i = 0; i < cartManagement.getCartList().size(); i++) {
             if (cartManagement.getCartList().get(i).getProduct().getIdProduct().equals(productId)) {
-                moneyToPay += cartManagement.getCartList().get(i).getProduct().getPriceProduct();
+                moneyToPay += cartManagement.getCartList().get(i).getProduct().getPriceProduct() * cartManagement.getCartList().get(i).getProduct().getAmount();
             }
         }
         System.out.println("Bạn cần thanh toán " + moneyToPay + " USD");
@@ -172,7 +172,7 @@ public class UserMenu {
             return;
         }
         for (int i = 0; i < cartManagement.getCartList().size(); i++) {
-            moneyToPay += cartManagement.getCartList().get(i).getProduct().getPriceProduct();
+            moneyToPay += cartManagement.getCartList().get(i).getProduct().getPriceProduct() * cartManagement.getCartList().get(i).getProduct().getAmount();
         }
         System.out.println("Bạn cần thanh toán " + moneyToPay + " USD");
         confirm(moneyToPay);
@@ -186,16 +186,16 @@ public class UserMenu {
             if (account.getMoney() > moneyToPay) {
                 account.setMoney(account.getMoney() - moneyToPay);
                 System.out.println("thanh toán thành công");
-                cartManagement.removeAllProduct();
                 int role = 0;
-                for (int i = 0; i < productManagement.getProductList().size(); i++) {
-                    for (int j = 0; j < cartManagement.getCartList().size(); j++) {
-                        if(productManagement.getProductList().get(i).getIdProduct().equals(cartManagement.getCartList().get(i).getProduct().getIdProduct())) {
+                for (int i = 0; i < cartManagement.getCartList().size(); i++) {
+                    for (int j = 0; j < productManagement.getProductList().size(); j++) {
+                        if (productManagement.getProductList().get(j).getIdProduct().equals(cartManagement.getCartList().get(i).getProduct().getIdProduct())) {
                             role++;
-                            productManagement.getProductList().get(i).setSold(role);
+                            productManagement.getProductList().get(j).setSold(role);
                         }
                     }
                 }
+                cartManagement.removeAllProduct();
             } else {
                 System.out.println("Số tiền không đủ - bạn hãy nạp thêm tiền đi");
             }
@@ -209,14 +209,18 @@ public class UserMenu {
     private void addProductToCart() {
         System.out.println("Bạn muốn thêm sản phẩm nào vào giỏ hàng");
         System.out.println("Nhập mã và tên sản phẩm mà bạn muốn thêm vào");
-        System.out.print("Nhập mã: ");
+        System.out.print("Nhập mã sản phẩm: ");
         String idProduct = scanner.nextLine();
-        System.out.print("Nhập tên: ");
+        System.out.print("Nhập tên sản phẩm: ");
         String nameProduct = scanner.nextLine();
+        System.out.print("Nhập số lượng: ");
+        int amount = scanner.nextInt();
+        scanner.nextLine();
         int indexId = productManagement.findById(idProduct);
         int indexName = productManagement.findByName(nameProduct);
         if (indexId != -1 && indexName != -1) {
             Product product = productManagement.getProductList().get(indexId);
+            product.setAmount(amount);
             cartManagement.addNew(new Cart(product));
             System.out.println("Thêm vào giỏ hàng thành công");
         } else {
@@ -230,7 +234,7 @@ public class UserMenu {
     }
 
     private void statisticalProductByCategory() {
-        if(categoryManagement.getCategoryList().isEmpty()) {
+        if (categoryManagement.getCategoryList().isEmpty()) {
             System.out.println("Danh mục của bạn đang trống");
             return;
         }

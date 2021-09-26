@@ -6,6 +6,10 @@ import com.codegym.model.Product;
 public class Clothes extends Product {
     private String color;
 
+    public Clothes() {
+        super();
+    }
+
     public Clothes(String idProduct, String nameProduct, String descriptionProduct, double priceProduct, Category category, int sold, String color) {
         super(idProduct, nameProduct, descriptionProduct, priceProduct, category, sold);
         this.color = color;
